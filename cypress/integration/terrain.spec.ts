@@ -6,21 +6,16 @@ describe('cities test', () => {
         cy.get('input[name="password"]').type("admin").should('have.value','admin').type("{enter}")
     })
 
-    it('create a new city', () => {
-        cy.visit('http://localhost:10000/base/state')
-
-        cy.contains('Adicionar').click()
-
-        cy.get('input[name="name"]').type("name").should('have.value','name')
-        cy.get('input[name="uf"]').type("uf").should('have.value','uf').type("{enter}")
-
-        cy.visit('http://localhost:10000/base/city')
+    it('create a new terrain', () => {
+        cy.visit('http://localhost:10000/greenfield/terrain')
 
         cy.contains('Adicionar').click()
     
+        cy.get('input[name="identifier"]').type("identifier").should('have.value','identifier')
         cy.get('input[name="name"]').type("name").should('have.value','name')
-        cy.get('.select2-selection__rendered').click()
+        cy.get('[id=select2-id_city-container]').click()
         cy.get('input[class=select2-search__field]').type("name").should('have.value','name').type('{enter}')
+        cy.get('[id=select2-id_status-container]').click()
 
         cy.contains('Salvar').click()
 
@@ -28,10 +23,10 @@ describe('cities test', () => {
         cy.get('.table').find('tr').its('length').should('be.gte', 1)
     })
 
-    it('create a new city error', () => {
-        cy.visit('http://localhost:10000/base/city/add')
+    it('create a new terrain error', () => {
+        cy.visit('http://localhost:10000/greenfield/terrain/add')
     
-        cy.get('input[name="name"]').type("name").should('have.value','name').type("{enter}")
+        cy.get('input[name="identifier"]').type("identifier").should('have.value','identifier').type('{enter}')
         cy.get('li').should('contain', 'Este campo é obrigatório.')
     })
 })
